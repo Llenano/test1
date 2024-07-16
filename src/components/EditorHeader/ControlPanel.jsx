@@ -1158,30 +1158,21 @@ export default function ControlPanel({
             showCardinality: !prev.showCardinality,
           })),
       },
-      theme: {
-        children: [
-          {
-            light: () => {
-              const body = document.body;
-              if (body.hasAttribute("theme-mode")) {
-                body.setAttribute("theme-mode", "light");
-              }
-              localStorage.setItem("theme", "light");
-              setSettings((prev) => ({ ...prev, mode: "light" }));
-            },
-          },
-          {
-            dark: () => {
-              const body = document.body;
-              if (body.hasAttribute("theme-mode")) {
-                body.setAttribute("theme-mode", "dark");
-              }
-              localStorage.setItem("theme", "dark");
-              setSettings((prev) => ({ ...prev, mode: "dark" }));
-            },
-          },
-        ],
-        function: () => {},
+      dark_theme: {
+        state: settings.mode === "dark" ? (
+          <i className="bi bi-toggle-on" />
+        ) : (
+          <i className="bi bi-toggle-off" />
+        ),
+        function: () => {
+          const body = document.body;
+          const theme_mode = settings.mode === "dark" ? "light" : "dark";
+          if (body.hasAttribute("theme-mode")) {
+            body.setAttribute("theme-mode", theme_mode);
+          }
+          localStorage.setItem("theme", theme_mode);
+          setSettings((prev) => ({ ...prev, mode: theme_mode }));
+        },
       },
       zoom_in: {
         function: zoomIn,
